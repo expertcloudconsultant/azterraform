@@ -1,3 +1,4 @@
 settings.json
 .vscode
 .terraform.tfstate.lock.info
+terraform.tfstate
