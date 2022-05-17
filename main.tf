@@ -2,6 +2,6 @@
 
 variable "firstvar" {
     type = string
-    default = "hello nana esther momo"
+    default = "east-us"
 
 }
