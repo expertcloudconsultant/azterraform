@@ -8,10 +8,3 @@ variable "prefix" {
   type    = string
   default = "emc-eus-corporate"
 }
-
-
-variable "ssh-source-address" {
-
-  type    = string
-  default = "*"
-}
