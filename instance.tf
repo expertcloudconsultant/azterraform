@@ -3,7 +3,7 @@ resource "azurerm_virtual_machine" "emc-eus-corporate-webserver-vm-01" {
   name                  = "${var.prefix}-webserver-vm-01"
   location              = azurerm_resource_group.emc-eus-corporate-resources-rg.location
   resource_group_name   = azurerm_resource_group.emc-eus-corporate-resources-rg.name
-  network_interface_ids = [azurerm_network_interface.emc-eus-corporate-nic-01.name]
+  network_interface_ids = [azurerm_network_interface.emc-eus-corporate-nic-01.id]
   vm_size               = "Standard_DC1_v3"
 
   # Uncomment this line to delete the OS disk automatically when deleting the VM
@@ -12,7 +12,14 @@ resource "azurerm_virtual_machine" "emc-eus-corporate-webserver-vm-01" {
   # Uncomment this line to delete the data disks automatically when deleting the VM
   # delete_data_disks_on_termination = true
 
-  storage_image_reference {
+  os_disk {
+    name                 = "webservervm01"
+    caching              = "ReadWrite"
+    storage_account_type = "Premium_LRS"
+  }
+
+
+  source_image_reference {
     publisher = "Canonical"
     offer     = "UbuntuServer"
     sku       = "20.04-LTS"
@@ -46,9 +53,9 @@ resource "azurerm_network_interface" "emc-eus-corporate-nic-01" {
 
   ip_configuration {
     name                          = "${var.prefix}-vmnic"
-    subnet_id                     = azurerm_subnet.presentation-subnet.name
+    subnet_id                     = azurerm_subnet.presentation-subnet.id
     private_ip_address_allocation = "Dynamic"
     public_ip_address_id          = azurerm_public_ip.emc-eus-corporate-nic-01-pip.id
-  
+
   }
 }
