@@ -1,8 +1,8 @@
 # Create virtual machine
-resource "azurerm_linux_virtual_machine" "emc-eus-corporate-webserver-vm-01" {
-  name                  = "emc-eus-corporate-webserver-vm-01"
-  location              = azurerm_resource_group.emc-eus-corporate-resources-rg.location
-  resource_group_name   = azurerm_resource_group.emc-eus-corporate-resources-rg.name
+resource "azurerm_linux_virtual_machine" "emc-neu-corporate-webserver-vm-01" {
+  name                  = "emc-neu-corporate-webserver-vm-01"
+  location              = azurerm_resource_group.emc-neu-corporate-resources-rg.location
+  resource_group_name   = azurerm_resource_group.emc-neu-corporate-resources-rg.name
   network_interface_ids = [azurerm_network_interface.corporate-webserver-vm-01-nic.id]
   size                  = "Standard_DS1_v2"
 
