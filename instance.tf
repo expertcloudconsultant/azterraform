@@ -1,10 +1,10 @@
 # Create virtual machine
-resource "azurerm_linux_virtual_machine" "emc-neu-corporate-webserver-vm-01" {
-  name                  = "emc-neu-corporate-webserver-vm-01"
-  location              = azurerm_resource_group.emc-neu-corporate-resources-rg.location
-  resource_group_name   = azurerm_resource_group.emc-neu-corporate-resources-rg.name
+resource "azurerm_linux_virtual_machine" "emc-eus2-corporate-webserver-vm-01" {
+  name                  = "emc-eus2-corporate-webserver-vm-01"
+  location              = azurerm_resource_group.emc-eus2-corporate-resources-rg.location
+  resource_group_name   = azurerm_resource_group.emc-eus2-corporate-resources-rg.name
   network_interface_ids = [azurerm_network_interface.corporate-webserver-vm-01-nic.id]
-  size                  = "Standard_DS1_v2"
+  size                  = "Standard_DC1ds_v3"
 
   os_disk {
     name                 = "corpwebservervm01disk"
@@ -14,8 +14,8 @@ resource "azurerm_linux_virtual_machine" "emc-neu-corporate-webserver-vm-01" {
 
   source_image_reference {
     publisher = "Canonical"
-    offer     = "UbuntuServer"
-    sku       = "20.04-LTS"
+    offer     = "0001-com-ubuntu-server-focal"
+    sku       = "20_04-lts-gen2"
     version   = "latest"
   }
 

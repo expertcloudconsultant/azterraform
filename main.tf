@@ -3,16 +3,16 @@
 #https://docs.microsoft.com/en-us/azure/developer/terraform/create-linux-virtual-machine-with-infrastructure
 
 #Create resource group
-resource "azurerm_resource_group" "emc-neu-corporate-resources-rg" {
-  name     = "emc-neu-corporate-resources-rg"
+resource "azurerm_resource_group" "emc-eus2-corporate-resources-rg" {
+  name     = "emc-eus2-corporate-resources-rg"
   location = var.location
 }
 
 #Create virtual network and subnets
-resource "azurerm_virtual_network" "emc-neu-corporate-network-vnet" {
-  name                = "emc-neu-corporate-network-vnet"
-  location            = azurerm_resource_group.emc-neu-corporate-resources-rg.location
-  resource_group_name = azurerm_resource_group.emc-neu-corporate-resources-rg.name
+resource "azurerm_virtual_network" "emc-eus2-corporate-network-vnet" {
+  name                = "emc-eus2-corporate-network-vnet"
+  location            = azurerm_resource_group.emc-eus2-corporate-resources-rg.location
+  resource_group_name = azurerm_resource_group.emc-eus2-corporate-resources-rg.name
   address_space       = ["172.20.0.0/16"]
 
   tags = {
@@ -23,40 +23,40 @@ resource "azurerm_virtual_network" "emc-neu-corporate-network-vnet" {
 #Create subnet - presentation tier
 resource "azurerm_subnet" "presentation-subnet" {
   name                 = "presentation-subnet"
-  resource_group_name  = azurerm_resource_group.emc-neu-corporate-resources-rg.name
-  virtual_network_name = azurerm_virtual_network.emc-neu-corporate-network-vnet.name
+  resource_group_name  = azurerm_resource_group.emc-eus2-corporate-resources-rg.name
+  virtual_network_name = azurerm_virtual_network.emc-eus2-corporate-network-vnet.name
   address_prefixes     = ["172.20.1.0/24"]
 }
 
 #Create subnet - data access tier
 resource "azurerm_subnet" "data-access-subnet" {
   name                 = "data-access-subnet"
-  resource_group_name  = azurerm_resource_group.emc-neu-corporate-resources-rg.name
-  virtual_network_name = azurerm_virtual_network.emc-neu-corporate-network-vnet.name
+  resource_group_name  = azurerm_resource_group.emc-eus2-corporate-resources-rg.name
+  virtual_network_name = azurerm_virtual_network.emc-eus2-corporate-network-vnet.name
   address_prefixes     = ["172.20.2.0/24"]
 }
 
 #Create Public IP Address
-resource "azurerm_public_ip" "emc-neu-corporate-nic-01-pip" {
-  name                = "emc-neu-corporate-nic-01-pip"
-  location            = azurerm_resource_group.emc-neu-corporate-resources-rg.location
-  resource_group_name = azurerm_resource_group.emc-neu-corporate-resources-rg.name
+resource "azurerm_public_ip" "emc-eus2-corporate-nic-01-pip" {
+  name                = "emc-eus2-corporate-nic-01-pip"
+  location            = azurerm_resource_group.emc-eus2-corporate-resources-rg.location
+  resource_group_name = azurerm_resource_group.emc-eus2-corporate-resources-rg.name
   allocation_method   = "Dynamic"
 }
 
 # Create public IPs
 resource "azurerm_public_ip" "corporate-webserver-vm-01-ip" {
   name                = "corporate-webserver-vm-01-ip"
-  location            = azurerm_resource_group.emc-neu-corporate-resources-rg.location
-  resource_group_name = azurerm_resource_group.emc-neu-corporate-resources-rg.name
+  location            = azurerm_resource_group.emc-eus2-corporate-resources-rg.location
+  resource_group_name = azurerm_resource_group.emc-eus2-corporate-resources-rg.name
   allocation_method   = "Dynamic"
 }
 
 # Create Network Security Group and rule
-resource "azurerm_network_security_group" "emc-neu-corporate-nsg" {
-  name                = "emc-neu-corporate-nsg"
-  location            = azurerm_resource_group.emc-neu-corporate-resources-rg.location
-  resource_group_name = azurerm_resource_group.emc-neu-corporate-resources-rg.name
+resource "azurerm_network_security_group" "emc-eus2-corporate-nsg" {
+  name                = "emc-eus2-corporate-nsg"
+  location            = azurerm_resource_group.emc-eus2-corporate-resources-rg.location
+  resource_group_name = azurerm_resource_group.emc-eus2-corporate-resources-rg.name
 
   security_rule {
     name                       = "SSH"
@@ -74,8 +74,8 @@ resource "azurerm_network_security_group" "emc-neu-corporate-nsg" {
 # Create network interface
 resource "azurerm_network_interface" "corporate-webserver-vm-01-nic" {
   name                = "corporate-webserver-vm-01-nic"
-  location            = azurerm_resource_group.emc-neu-corporate-resources-rg.location
-  resource_group_name = azurerm_resource_group.emc-neu-corporate-resources-rg.name
+  location            = azurerm_resource_group.emc-eus2-corporate-resources-rg.location
+  resource_group_name = azurerm_resource_group.emc-eus2-corporate-resources-rg.name
 
   ip_configuration {
     name                          = "corporate-webserver-vm-01-nic-ip"
@@ -88,14 +88,14 @@ resource "azurerm_network_interface" "corporate-webserver-vm-01-nic" {
 # Connect the security group to the network interface
 resource "azurerm_network_interface_security_group_association" "corporate-webserver-vm-01-nsg-link" {
   network_interface_id      = azurerm_network_interface.corporate-webserver-vm-01-nic.id
-  network_security_group_id = azurerm_network_security_group.emc-neu-corporate-nsg.id
+  network_security_group_id = azurerm_network_security_group.emc-eus2-corporate-nsg.id
 }
 
 # Generate random text for a unique storage account name
 resource "random_id" "randomId" {
   keepers = {
     # Generate a new ID only when a new resource group is defined
-    resource_group = azurerm_resource_group.emc-neu-corporate-resources-rg.name
+    resource_group = azurerm_resource_group.emc-eus2-corporate-resources-rg.name
   }
 
   byte_length = 8
