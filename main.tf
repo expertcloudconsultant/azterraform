@@ -31,7 +31,8 @@ resource "azurerm_subnet" "presentation-subnet" {
 #Create subnet - data access tier
 resource "azurerm_subnet" "data-access-subnet" {
   name                 = "data-access-subnet"
-  resource_group_name  = azurerm_resource_group.emc-eus2-corporate-resources-rg.name
+  # resource_group_name  = azurerm_resource_group.emc-eus2-corporate-resources-rg.name
+  resource_group_name  = var.rg
   virtual_network_name = azurerm_virtual_network.emc-eus2-corporate-network-vnet.name
   address_prefixes     = ["172.20.2.0/24"]
 }
