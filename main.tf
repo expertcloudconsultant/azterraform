@@ -30,9 +30,9 @@ resource "azurerm_subnet" "presentation-subnet" {
 
 #Create subnet - data access tier
 resource "azurerm_subnet" "data-access-subnet" {
-  name                 = "data-access-subnet"
+  name = "data-access-subnet"
   # resource_group_name  = azurerm_resource_group.emc-eus2-corporate-resources-rg.name
-  resource_group_name  = "${var.rg}"
+  resource_group_name  = var.rg
   virtual_network_name = azurerm_virtual_network.emc-eus2-corporate-network-vnet.name
   address_prefixes     = ["172.20.2.0/24"]
 }
@@ -64,6 +64,21 @@ resource "azurerm_network_security_group" "emc-eus2-corporate-nsg" {
     source_address_prefix      = "*"
     destination_address_prefix = "*"
   }
+
+
+  security_rule {
+    name                       = "WEB"
+    priority                   = 1002
+    direction                  = "Inbound"
+    access                     = "Allow"
+    protocol                   = "Tcp"
+    source_port_range          = "*"
+    destination_port_range     = "80"
+    source_address_prefix      = "*"
+    destination_address_prefix = "*"
+  }
+
+
 }
 
 # Create network interface
@@ -116,12 +131,19 @@ resource "tls_private_key" "linuxsrvuserprivkey" {
 #Custom Data Insertion Here
 
 data "template_cloudinit_config" "webserverconfig" {
-  gzip = true
+  gzip          = true
   base64_encode = true
-  
+
   part {
 
-      content_type = "text/cloud-config"
-      content  = "packages: ['nginx']"
+    content_type = "text/cloud-config"
+    content      = "packages: ['nginx']"
   }
 }
+
+
+
+# #Terraform import
+# resource "azurerm_virtual_machine" "emc-eus2-corporate-webserver-vm-02" {
+#   # (resource arguments)
+# }

@@ -28,7 +28,14 @@ resource "azurerm_linux_virtual_machine" "emc-eus2-corporate-webserver-vm-01" {
     public_key = tls_private_key.linuxsrvuserprivkey.public_key_openssh
   }
 
-custom_data = data.template_cloudinit_config.webserverconfig.rendered
+  custom_data = data.template_cloudinit_config.webserverconfig.rendered
+
 
 }
 
+resource "azurerm_management_lock" "webserver-ip" {
+  name       = "resource-ip"
+  scope      = azurerm_public_ip.corporate-webserver-vm-01-ip.id
+  lock_level = "CanNotDelete"
+  notes      = "Locked because it's a the nginx webserver"
+}

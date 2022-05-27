@@ -1,8 +1,8 @@
 #Variable file used to store details of repetitive references
 variable "location" {
   description = "availability zone that is a string type variable"
-  type    = string
-  default = "eastus2"
+  type        = string
+  default     = "eastus2"
 }
 
 
@@ -13,7 +13,7 @@ variable "prefix" {
 }
 
 variable "rg" {
-type = string
-default = "emc-eus2-corporate-resources-rg"
+  type    = string
+  default = "emc-eus2-corporate-resources-rg"
 
 }
