@@ -32,7 +32,7 @@ resource "azurerm_subnet" "presentation-subnet" {
 resource "azurerm_subnet" "data-access-subnet" {
   name                 = "data-access-subnet"
   # resource_group_name  = azurerm_resource_group.emc-eus2-corporate-resources-rg.name
-  resource_group_name  = var.rg
+  resource_group_name  = "${var.rg}"
   virtual_network_name = azurerm_virtual_network.emc-eus2-corporate-network-vnet.name
   address_prefixes     = ["172.20.2.0/24"]
 }
@@ -113,4 +113,15 @@ resource "tls_private_key" "linuxsrvuserprivkey" {
   rsa_bits  = 4096
 }
 
-#az account list-locations --output table
+#Custom Data Insertion Here
+
+data "template_cloudinit_config" "webserverconfig" {
+  gzip = true
+  base64_encode = true
+  
+  part {
+
+      content_type = "text/cloud-config"
+      content  = "packages: ['nginx']"
+  }
+}

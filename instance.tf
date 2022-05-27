@@ -1,4 +1,4 @@
-# Create virtual machine
+# Create Virtual Machine Number #1
 resource "azurerm_linux_virtual_machine" "emc-eus2-corporate-webserver-vm-01" {
   name                  = "emc-eus2-corporate-webserver-vm-01"
   location              = azurerm_resource_group.emc-eus2-corporate-resources-rg.location
@@ -27,4 +27,8 @@ resource "azurerm_linux_virtual_machine" "emc-eus2-corporate-webserver-vm-01" {
     username   = "linuxsrvuser"
     public_key = tls_private_key.linuxsrvuserprivkey.public_key_openssh
   }
+
+custom_data = data.template_cloudinit_config.webserverconfig.rendered
+
 }
+
