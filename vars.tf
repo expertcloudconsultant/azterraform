@@ -7,10 +7,10 @@ variable "location" {
 
 
 
-variable "prefix" {
-  type    = string
-  default = "emc-eus2-corporate"
-}
+# variable "prefix" {
+#   type    = string
+#   default = "emc-eus2-corporate"
+# }
 
 variable "rg" {
   type    = string
@@ -30,3 +30,11 @@ default = 22
 
 }
 
+
+
+variable "emc-corp" {
+description = "emc corporation prefix"
+default = "emc-eus2-corporate"
+
+
+}

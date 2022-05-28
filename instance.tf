@@ -1,6 +1,6 @@
 # Create Virtual Machine Number #1
 resource "azurerm_linux_virtual_machine" "emc-eus2-corporate-webserver-vm-01" {
-  name                  = "emc-eus2-corporate-webserver-vm-01"
+  name                  = "${var.emc-corp}-webserver-vm-01"
   location              = azurerm_resource_group.emc-eus2-corporate-resources-rg.location
   resource_group_name   = azurerm_resource_group.emc-eus2-corporate-resources-rg.name
   network_interface_ids = [azurerm_network_interface.corporate-webserver-vm-01-nic.id]
