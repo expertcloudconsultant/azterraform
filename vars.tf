@@ -17,3 +17,15 @@ variable "rg" {
   default = "emc-eus2-corporate-resources-rg"
 
 }
+
+variable "web_server_port" {
+description = "dedicated port for webserver"
+default = 80
+
+}
+
+variable "ssh_access_port" {
+description = "dedicated ssh port for webserver shell access"
+default = 22
+
+}
