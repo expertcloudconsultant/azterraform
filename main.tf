@@ -1,10 +1,16 @@
 
-
 #https://docs.microsoft.com/en-us/azure/developer/terraform/create-linux-virtual-machine-with-infrastructure
+#Terraform commands
+#terraform init,plan,apply,destroy
+#terraform plan -destroy --out=plan-file.pln
+#terraform show plan-file.pln
+
+
 
 #Create resource group
 resource "azurerm_resource_group" "emc-eus2-corporate-resources-rg" {
-  name     = "emc-eus2-corporate-resources-rg"
+  # name     = "emc-eus2-corporate-resources-rg"
+  name     = "${var.emc-corp}-resource-rg"
   location = var.location
 }
 
@@ -31,8 +37,7 @@ resource "azurerm_subnet" "presentation-subnet" {
 #Create subnet - data access tier
 resource "azurerm_subnet" "data-access-subnet" {
   name = "${var.emc-corp}-data-access-subnet"
-  # resource_group_name  = azurerm_resource_group.emc-eus2-corporate-resources-rg.name
-  resource_group_name  = var.rg
+  resource_group_name  = azurerm_resource_group.emc-eus2-corporate-resources-rg.name
   virtual_network_name = azurerm_virtual_network.emc-eus2-corporate-network-vnet.name
   address_prefixes     = ["172.20.2.0/24"]
 }
@@ -60,7 +65,7 @@ resource "azurerm_network_security_group" "emc-eus2-corporate-nsg" {
     access                     = "Allow"
     protocol                   = "Tcp"
     source_port_range          = "*"
-    destination_port_range     = "${var.ssh_access_port}"
+    destination_port_range     = var.ssh_access_port
     source_address_prefix      = "*"
     destination_address_prefix = "*"
   }
@@ -73,7 +78,7 @@ resource "azurerm_network_security_group" "emc-eus2-corporate-nsg" {
     access                     = "Allow"
     protocol                   = "Tcp"
     source_port_range          = "*"
-    destination_port_range     = "${var.web_server_port}"
+    destination_port_range     = var.web_server_port
     source_address_prefix      = "*"
     destination_address_prefix = "*"
   }
@@ -140,3 +145,17 @@ data "template_cloudinit_config" "webserverconfig" {
     content      = "packages: ['nginx']"
   }
 }
+
+
+resource "azurerm_resource_group" "emc-eus2-corporate-import-rg" {
+
+  name     = "emc-eus2-corporate-import-rg"
+  location = var.location
+
+  tags = {
+    env = "resource-group"
+  }
+
+}
+
+# terraform import azurerm_resource_group.emc-eus2-corporate-import-rg /subscriptions/31e9c06e-6d3f-4485-836c-ff36c38135a3/resourceGroups/emc-import-resources-rg
