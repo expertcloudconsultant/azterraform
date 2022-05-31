@@ -1,0 +1,102 @@
+PS C:\Workdir\terraform\azterraform> terraform state list
+data.template_cloudinit_config.webserverconfig
+azurerm_linux_virtual_machine.emc-eus2-corporate-webserver-vm-01
+azurerm_management_lock.webserver-ip
+azurerm_network_interface.corporate-webserver-vm-01-nic
+azurerm_network_interface_security_group_association.corporate-webserver-vm-01-nsg-link
+azurerm_network_security_group.emc-eus2-corporate-nsg
+azurerm_public_ip.corporate-webserver-vm-01-ip
+azurerm_resource_group.emc-eus2-corporate-import-rg
+azurerm_resource_group.emc-eus2-corporate-resources-rg
+azurerm_storage_account.corpwebservervm01storage
+azurerm_subnet.data-access-subnet
+azurerm_subnet.presentation-subnet
+azurerm_virtual_network.emc-eus2-corporate-network-vnet
+random_id.randomId
+tls_private_key.linuxsrvuserprivkey
+PS C:\Workdir\terraform\azterraform>
+
+
+
+
+PS C:\Workdir\terraform\azterraform> terraform state show azurerm_linux_virtual_machine.emc-eus2-corporate-webserver-vm-01
+# azurerm_linux_virtual_machine.emc-eus2-corporate-webserver-vm-01:
+resource "azurerm_linux_virtual_machine" "emc-eus2-corporate-webserver-vm-01" {
+    admin_username                  = "linuxsrvuser"
+    allow_extension_operations      = true
+    computer_name                   = "corporate-webserver-vm-01"
+    custom_data                     = (sensitive value)
+    disable_password_authentication = true
+    encryption_at_host_enabled      = false
+    extensions_time_budget          = "PT1H30M"
+    id                              = "/subscriptions/31e9c06e-6d3f-4485-836c-ff36c38135a3/resourceGroups/emc-eus2-corporate-resource-rg/providers/Microsoft.Compute/virtualMachines/emc-eus2-corporate-webserver-vm-01"
+    location                        = "eastus2"
+    max_bid_price                   = -1
+    name                            = "emc-eus2-corporate-webserver-vm-01"
+    network_interface_ids           = [
+        "/subscriptions/31e9c06e-6d3f-4485-836c-ff36c38135a3/resourceGroups/emc-eus2-corporate-resource-rg/providers/Microsoft.Network/networkInterfaces/corporate-webserver-vm-01-nic",
+    ]
+    patch_mode                      = "ImageDefault"
+    platform_fault_domain           = -1
+    priority                        = "Regular"
+    private_ip_address              = "172.20.1.4"
+    private_ip_addresses            = [
+        "172.20.1.4",
+    ]
+    provision_vm_agent              = true
+    public_ip_address               = "20.110.242.56"
+    public_ip_addresses             = [
+        "20.110.242.56",
+    ]
+    resource_group_name             = "emc-eus2-corporate-resource-rg"
+    secure_boot_enabled             = false
+    size                            = "Standard_DC1ds_v3"
+    tags                            = {}
+    virtual_machine_id              = "c3755938-355a-4331-abaa-6925a581ac26"
+    vtpm_enabled                    = false
+
+    admin_ssh_key {
+        public_key = <<-EOT
+            ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDsFNl1izaa5hfLuarJfnKeF7YIBpUN04HH91KeeMPnE6ZiHeC97vmA4omVmu4EUdIDWtL8YipXiMmzV8sylSXVBk3YgttWf/XlyPegL+s1cN4qdz+26a0QZAYocuSQZhtxGO8G0miGuUyQ7dO91xpRgdWnjHiXbU1kdJ8zmIeTltifUZOqZaCTCyFDoWbvVY1lFB8fcX78O2ax/GsOhgDxR7H+O3vDIMbVrNuLYCeKYTBHqB3daMbDo6pzAkh/ttpT6R6XIJBm3ssXzfV8gQLMjpDPPUuUwmiZFN24OgdU8j/AiPt57qKo/RYKUTWWWqfseH0eCD7BL7SznMjEfuHLY9Ij19Plvk8uZJC4J5r1IazpNyC+qPkUVmtxvVhLjy0iTwBNo/oRFpBlYsu77veXOHbguhcMw3tn+phyXz5p8qiRekJSsT0jnojzJYwRZGJ10KyTEgrC9glquB77k1I3u9lhDTfYmqHHaVFaC3DiBQhp0BTVkP2eIgtFsE63k2F9GQ6OVCZehbU43J8KokzBlBfKxkhDbk8/iXc3SkjIf1yhlTy0L4LWEINPpDf0O/m/gPqdNQmgMyY0azhvubbKQ5YpHFfGZowsz/Kl1KV8DSD8OQgdtEd2lxq8W/Lq+jldgf4ygtgQ7hLuiPzF7wxAtZJ6wAW68DCt2WCvGNjY+w==
+        EOT
+        username   = "linuxsrvuser"
+    }
+
+    os_disk {
+        caching                   = "ReadWrite"
+        disk_size_gb              = 30
+        name                      = "corpwebservervm01disk"
+        storage_account_type      = "Premium_LRS"
+        write_accelerator_enabled = false
+    }
+
+    source_image_reference {
+        offer     = "0001-com-ubuntu-server-focal"
+        publisher = "Canonical"
+        sku       = "20_04-lts-gen2"
+        version   = "latest"
+    }
+}
+PS C:\Workdir\terraform\azterraform> 
+
+
+PS C:\Workdir\terraform\azterraform> terraform state show azurerm_subnet.presentation-subnet                              
+# azurerm_subnet.presentation-subnet:
+resource "azurerm_subnet" "presentation-subnet" {
+    address_prefix                                 = "172.20.1.0/24"
+    address_prefixes                               = [
+        "172.20.1.0/24",
+    ]
+    enforce_private_link_endpoint_network_policies = false
+    enforce_private_link_service_network_policies  = false
+    id                                             = "/subscriptions/31e9c06e-6d3f-4485-836c-ff36c38135a3/resourceGroups/emc-eus2-corporate-resource-rg/providers/Microsoft.Network/virtualNetworks/emc-eus2-corporate-network-vnet/subnets/presentation-subnet"
+    name                                           = "presentation-subnet"
+    resource_group_name                            = "emc-eus2-corporate-resource-rg"
+    service_endpoint_policy_ids                    = []
+    service_endpoints                              = []
+    virtual_network_name                           = "emc-eus2-corporate-network-vnet"
+}
+PS C:\Workdir\terraform\azterraform> 
+
+
+
