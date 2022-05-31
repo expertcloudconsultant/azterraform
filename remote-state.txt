@@ -1,0 +1,15 @@
+az login
+az group create -l westeurope -n remote-terraform-state
+
+#Create storage account
+
+az storage account create -g remote-terraform-state -l westeurope \
+ --name tfstoragetrainingenc \
+ --sku Standard_LRS \
+ --encryption-services blob
+
+ az storage account create --name tfstoragetrainingenc --resource-group remote-terraform-state --location westeurope --sku Standard_LRS --encryption-services blob
+
+
+ #Query storage account keys
+ az storage account keys list  --resource-group remote-terraform-state account-name tfstoragetrainingenc --query [0].value -o tsv

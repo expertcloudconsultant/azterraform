@@ -13,6 +13,17 @@
 #terraform graph -verbose | dot -Tpng > graph.png # Also show destroyed resources
 
 
+#connect terraform to a remote[backend] state - using azure as an example
+terraform {
+
+  backend "azurerm" {
+    resource_group_name  = "remote-terraform-state"
+    storage_account_name = "tfstoragetrainingenc"
+    container_name       = "remote-terraform-container"
+    key                  = "terraform.tfstate"
+
+  }
+}
 
 #Create resource group
 resource "azurerm_resource_group" "emc-eus2-corporate-resources-rg" {

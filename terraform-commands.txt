@@ -1,3 +1,17 @@
+#Terraform commands
+#terraform init,plan,apply,destroy
+#terraform plan -destroy --out=plan-file.pln
+#terraform show plan-file.pln
+#terraform validate                          # Check if the template is fine
+#terraform fmt                               # Format template based on best practices
+#terraform state list                        # Lists all resources in the state file
+#terraform show                              # Print a complete state in human readable format
+#terraform state show path_to_resource       # Print details of one resource
+#terraform graph | dot -Tpng > graph.png     # Export dependency graph, needs GraphViz
+#terraform graph -verbose | dot -Tpng > graph.png # Also show destroyed resources
+
+
+
 PS C:\Workdir\terraform\azterraform> terraform state list
 data.template_cloudinit_config.webserverconfig
 azurerm_linux_virtual_machine.emc-eus2-corporate-webserver-vm-01
@@ -99,4 +113,153 @@ resource "azurerm_subnet" "presentation-subnet" {
 PS C:\Workdir\terraform\azterraform> 
 
 
+
+azurerm_resource_group."${var.emc-corp}-webserver-vm-01".location
+
+
+"azurerm_resource_group.${var.emc-corp}-resource-rg.location"
+
+${var.emc-corp}-resource-rg
+
+azurerm_resource_group.emc-eus2-corporate-resources-rg
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+az login
+az group create -l westeurope -n remote-terraform-state
+
+
+PS C:\Workdir\terraform\azterraform> az storage account create --name tfstoragetrainingenc --resource-group remote-terraform-state --location westeurope --sku Standard_LRS --encryption-services blob
+{
+  "accessTier": "Hot",
+  "allowBlobPublicAccess": true,
+  "allowCrossTenantReplication": null,
+  "allowSharedKeyAccess": null,
+  "azureFilesIdentityBasedAuthentication": null,
+  "blobRestoreStatus": null,
+  "creationTime": "2022-05-31T14:16:33.553692+00:00",
+  "customDomain": null,
+  "defaultToOAuthAuthentication": null,
+  "enableHttpsTrafficOnly": true,
+  "enableNfsV3": null,
+  "encryption": {
+    "encryptionIdentity": null,
+    "keySource": "Microsoft.Storage",
+    "keyVaultProperties": null,
+    "requireInfrastructureEncryption": null,
+    "services": {
+      "blob": {
+        "enabled": true,
+        "keyType": "Account",
+        "lastEnabledTime": "2022-05-31T14:16:33.772461+00:00"
+      },
+      "file": {
+        "enabled": true,
+        "keyType": "Account",
+        "lastEnabledTime": "2022-05-31T14:16:33.772461+00:00"
+      },
+      "queue": null,
+      "table": null
+    }
+  },
+  "extendedLocation": null,
+  "failoverInProgress": null,
+  "geoReplicationStats": null,
+  "id": "/subscriptions/31e9c06e-6d3f-4485-836c-ff36c38135a3/resourceGroups/remote-terraform-state/providers/Microsoft.Storage/storageAccounts/tfstoragetrainingenc",
+  "identity": null,
+  "immutableStorageWithVersioning": null,
+  "isHnsEnabled": null,
+  "keyCreationTime": {
+    "key1": "2022-05-31T14:16:33.756805+00:00",
+    "key2": "2022-05-31T14:16:33.756805+00:00"
+  },
+  "keyPolicy": null,
+  "kind": "StorageV2",
+  "largeFileSharesState": null,
+  "lastGeoFailoverTime": null,
+  "location": "westeurope",
+  "minimumTlsVersion": "TLS1_0",
+  "name": "tfstoragetrainingenc",
+  "networkRuleSet": {
+    "bypass": "AzureServices",
+    "defaultAction": "Allow",
+    "ipRules": [],
+    "resourceAccessRules": null,
+    "virtualNetworkRules": []
+  },
+  "primaryEndpoints": {
+    "blob": "https://tfstoragetrainingenc.blob.core.windows.net/",
+    "dfs": "https://tfstoragetrainingenc.dfs.core.windows.net/",
+    "file": "https://tfstoragetrainingenc.file.core.windows.net/",
+    "internetEndpoints": null,
+    "microsoftEndpoints": null,
+    "queue": "https://tfstoragetrainingenc.queue.core.windows.net/",
+    "table": "https://tfstoragetrainingenc.table.core.windows.net/",
+    "web": "https://tfstoragetrainingenc.z6.web.core.windows.net/"
+  },
+  "primaryLocation": "westeurope",
+  "privateEndpointConnections": [],
+  "provisioningState": "Succeeded",
+  "publicNetworkAccess": null,
+  "resourceGroup": "remote-terraform-state",
+  "routingPreference": null,
+  "sasPolicy": null,
+  "secondaryEndpoints": null,
+  "secondaryLocation": null,
+  "sku": {
+    "name": "Standard_LRS",
+    "tier": "Standard"
+  },
+  "statusOfPrimary": "available",
+  "statusOfSecondary": null,
+  "tags": {},
+  "type": "Microsoft.Storage/storageAccounts"
+}
+
+
+
+az storage account keys list  --resource-group remote-terraform-state account-name tfstoragetrainingenc --query [0].value -o tsv
+PS C:\Workdir\terraform\azterraform> az storage account keys list  --resource-group remote-terraform-state --account-name tfstoragetrainingenc --query [0].value -o tsv 
+SoAwac1x38Fw9Blpvi4vq3GgcXNqtyXr9C47aPU1TSSct1hhDJ4FV2ekxeKIb8c6yQLiniY/KZzh+AStbi89sQ==
+PS C:\Workdir\terraform\azterraform> 
+
+
+PS C:\Workdir\terraform\azterraform> az storage container create --name remote-terraform-container  --account-name tfstoragetrainingenc  --account-key  SoAwac1x38Fw9Blpvi4vq3GgcXNqtyXr9C47aPU1TSSct1hhDJ4FV2ekxeKIb8c6yQLiniY/KZzh+AStbi89sQ==
+{
+  "created": true
+}
+PS C:\Workdir\terraform\azterraform>
 
