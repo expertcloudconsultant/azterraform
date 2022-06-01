@@ -11,7 +11,7 @@ terraform {
     }
   }
 
-
+#Azurerm Backend Configuration
    backend "azurerm" {
     resource_group_name  = "remote-terraform-state"
     storage_account_name = "tfstoragetrainingenc"

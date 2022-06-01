@@ -12,7 +12,17 @@
 #terraform graph | dot -Tpng > graph.png     # Export dependency graph, needs GraphViz
 #terraform graph -verbose | dot -Tpng > graph.png # Also show destroyed resources
 
+#Create resource group for Eleanora
+resource "azurerm_resource_group" "corp-eleanora-rg" {
+    name     = "${var.emc-corp}-eleanora-rg"
+  location = var.location
+}
 
+#Create resource group for Stephanie
+resource "azurerm_resource_group" "corp-stephanie-rg" {
+    name     = "${var.emc-corp}-stephanie-rg"
+  location = var.location
+}
 
 
 #Create resource group
