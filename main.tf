@@ -13,17 +13,7 @@
 #terraform graph -verbose | dot -Tpng > graph.png # Also show destroyed resources
 
 
-#connect terraform to a remote[backend] state - using azure as an example
-terraform {
 
-  backend "azurerm" {
-    resource_group_name  = "remote-terraform-state"
-    storage_account_name = "tfstoragetrainingenc"
-    container_name       = "remote-terraform-container"
-    key                  = "terraform.tfstate"
-
-  }
-}
 
 #Create resource group
 resource "azurerm_resource_group" "emc-eus2-corporate-resources-rg" {
@@ -91,7 +81,7 @@ resource "azurerm_network_security_group" "emc-eus2-corporate-nsg" {
 
   security_rule {
     name                       = "WEB"
-    priority                   = 1002
+    priority                   = 1003
     direction                  = "Inbound"
     access                     = "Allow"
     protocol                   = "Tcp"
@@ -165,6 +155,7 @@ data "template_cloudinit_config" "webserverconfig" {
 }
 
 
+#importing a resource into terraform
 resource "azurerm_resource_group" "emc-eus2-corporate-import-rg" {
 
   name     = "emc-eus2-corporate-import-rg"

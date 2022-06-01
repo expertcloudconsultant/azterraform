@@ -1,0 +1,231 @@
+#!/bin/bash
+
+RESOURCE_GROUP_NAME=corptfstate
+STORAGE_ACCOUNT_NAME=corptfstate$RANDOM
+CONTAINER_NAME=corptfstate
+
+# Create resource group
+az group create --name $RESOURCE_GROUP_NAME --location eastus
+
+# Create storage account
+az storage account create --resource-group $RESOURCE_GROUP_NAME --name $STORAGE_ACCOUNT_NAME --sku Standard_LRS --encryption-services blob
+
+# Create blob container
+az storage container create --name $CONTAINER_NAME --account-name $STORAGE_ACCOUNT_NAME
+
+
+
+#!/bin/bash
+
+$RESOURCE_GROUP_NAME=corptfstate
+$STORAGE_ACCOUNT_NAME=corptfstate$RANDOM
+$CONTAINER_NAME=corptfstatecontainer
+
+# Create resource group
+az group create --name corptfstate --location eastus
+
+# Create storage account
+az storage account create --resource-group corptfstate --name corptfstatestorage --sku Standard_LRS --encryption-services blob
+
+# Create blob container
+az storage container create --name corptfstatecontainer --account-name corptfstatestorage
+
+
+
+az storage account keys list  --resource-group corptfstate --account-name corptfstatestorage --query [0].value -o tsv 
+
+
+
+PS C:\Workdir\iaclab> az storage account keys list  --resource-group corptfstate --account-name corptfstatestorage --query [0].value -o tsv
+1X5tj6mqEGr5iDuSZdIPPB3o7dOnBL6iidOO0YNyyW+wLLfNAU26TfzGfuEuFjkorv+yg5aEOz4b+AStAMLWow==
+PS C:\Workdir\iaclab> 
+
+
+export ARM_ACCESS_KEY=$(az keyvault secret show --name terraform-backend-key --vault-name myKeyVault --query value -o tsv)
+
+export ARM_ACCESS_KEY=$(az keyvault secret show --name terraform-backend-key --vault-name myKeyVault --query value -o tsv)
+
+PS C:\Workdir\iaclab> az storage container create --name corptfstatecontainer  --account-name corptfstatestorage --account-key  1X5tj6mqEGr5iDuSZdIPPB3o7dOnBL6iidOO0YNyyW+wLLfNAU26TfzGfuEuFjkorv+yg5aEOz4b+AStAMLWow==
+{
+  "created": false
+}
+PS C:\Workdir\iaclab> 
+
+az storage container create --name corptfstatecontainer  --account-name corptfstatestorage --account-key  1X5tj6mqEGr5iDuSZdIPPB3o7dOnBL6iidOO0YNyyW+wLLfNAU26TfzGfuEuFjkorv+yg5aEOz4b+AStAMLWow==
+
+PS C:\Workdir\iaclab> az storage container create --name corptfstatecontainer  --account-name corptfstatestorage --account-key  1X5tj6mqEGr5iDuSZdIPPB3o7dOnBL6iidOO0YNyyW+wLLfNAU26TfzGfuEuFjkorv+yg5aEOz4b+AStAMLWow==
+{
+  "created": false
+}
+PS C:\Workdir\iaclab> 
+
+
+az keyvault secret show --name terraform-backend-key --vault-name myKeyVault --query value -o tsv
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Outputs
+
+PS C:\Workdir\iaclab> az group create --name corptfstate --location eastus
+{
+  "id": "/subscriptions/31e9c06e-6d3f-4485-836c-ff36c38135a3/resourceGroups/corptfstate",
+  "location": "eastus",
+  "managedBy": null,
+  "name": "corptfstate",
+  "properties": {
+    "provisioningState": "Succeeded"
+  },
+  "tags": null,
+  "type": "Microsoft.Resources/resourceGroups"
+}
+PS C:\Workdir\iaclab> az storage account create --resource-group corptfstate-rg --name corptfstatestorage --sku Standard_LRS --encryption-services blob
+(ResourceGroupNotFound) Resource group 'corptfstate-rg' could not be found.
+PS C:\Workdir\iaclab> az storage account create --resource-group corptfstate --name corptfstatestorage --sku Standard_LRS --encryption-services blob
+{
+  "accessTier": "Hot",
+  "allowBlobPublicAccess": true,
+  "allowCrossTenantReplication": null,
+  "allowSharedKeyAccess": null,
+  "azureFilesIdentityBasedAuthentication": null,
+  "blobRestoreStatus": null,
+  "creationTime": "2022-06-01T13:15:00.964992+00:00",
+  "customDomain": null,
+  "defaultToOAuthAuthentication": null,
+  "enableHttpsTrafficOnly": true,
+  "enableNfsV3": null,
+  "encryption": {
+    "encryptionIdentity": null,
+    "keySource": "Microsoft.Storage",
+    "keyVaultProperties": null,
+    "requireInfrastructureEncryption": null,
+    "services": {
+      "blob": {
+        "enabled": true,
+        "keyType": "Account",
+        "lastEnabledTime": "2022-06-01T13:15:01.105622+00:00"
+      },
+      "file": {
+        "enabled": true,
+        "keyType": "Account",
+        "lastEnabledTime": "2022-06-01T13:15:01.105622+00:00"
+      },
+      "queue": null,
+      "table": null
+    }
+  },
+  "extendedLocation": null,
+  "failoverInProgress": null,
+  "geoReplicationStats": null,
+  "id": "/subscriptions/31e9c06e-6d3f-4485-836c-ff36c38135a3/resourceGroups/corptfstate/providers/Microsoft.Storage/storageAccounts/corptfstatestorage",
+  "identity": null,
+  "immutableStorageWithVersioning": null,
+  "isHnsEnabled": null,
+  "keyCreationTime": {
+    "key1": "2022-06-01T13:15:01.089993+00:00",
+    "key2": "2022-06-01T13:15:01.089993+00:00"
+  },
+  "keyPolicy": null,
+  "kind": "StorageV2",
+  "largeFileSharesState": null,
+  "lastGeoFailoverTime": null,
+  "location": "eastus",
+  "minimumTlsVersion": "TLS1_0",
+  "name": "corptfstatestorage",
+  "networkRuleSet": {
+    "bypass": "AzureServices",
+    "defaultAction": "Allow",
+    "ipRules": [],
+    "resourceAccessRules": null,
+    "virtualNetworkRules": []
+  },
+  "primaryEndpoints": {
+    "blob": "https://corptfstatestorage.blob.core.windows.net/",
+    "dfs": "https://corptfstatestorage.dfs.core.windows.net/",
+    "file": "https://corptfstatestorage.file.core.windows.net/",
+    "internetEndpoints": null,
+    "microsoftEndpoints": null,
+    "queue": "https://corptfstatestorage.queue.core.windows.net/",
+    "table": "https://corptfstatestorage.table.core.windows.net/",
+    "web": "https://corptfstatestorage.z13.web.core.windows.net/"
+  },
+  "primaryLocation": "eastus",
+  "privateEndpointConnections": [],
+  "provisioningState": "Succeeded",
+  "publicNetworkAccess": null,
+  "resourceGroup": "corptfstate",
+  "routingPreference": null,
+  "sasPolicy": null,
+  "secondaryEndpoints": null,
+  "secondaryLocation": null,
+  "sku": {
+    "name": "Standard_LRS",
+    "tier": "Standard"
+  },
+  "statusOfPrimary": "available",
+  "statusOfSecondary": null,
+  "tags": {},
+  "type": "Microsoft.Storage/storageAccounts"
+}
+PS C:\Workdir\iaclab> az storage container create --name corptfstatecontainer --account-name corptfstatestorage
+
+There are no credentials provided in your command and environment, we will query for account key for your storage account.
+It is recommended to provide --connection-string, --account-key or --sas-token in your command as credentials.
+
+You also can add `--auth-mode login` in your command to use Azure Active Directory (Azure AD) for authorization if your login account is assigned required RBAC roles.
+For more information about RBAC roles in storage, visit https://docs.microsoft.com/azure/storage/common/storage-auth-aad-rbac-cli.
+
+In addition, setting the corresponding environment variables can avoid inputting credentials in your command. Please use --help to get more information about environment variable usage.
+{
+  "created": true
+}
+PS C:\Workdir\iaclab>
+
+
+#Create Resource Group
+az group create --name <resource-group-name> --location eastus
+
+#Create Storage Account
+az storage account create --resource-group <resource-group-name> --name <storage-account-name> --sku Standard_LRS --encryption-services blob
+
+#Create Storage Container
+az storage container create --name <storage-account-container> --account-name <storage-account-name>  
+
+#Get the storage access key and store it as an environment variable
+az storage account keys list  --resource-group <resource-group-name> --account-name <storage-account-name> --query [0].value -o tsv 
+
+#protect the Azure Storage account access key, store it in Azure Key Vault
+az keyvault secret show --name terraform-backend-key --vault-name <key-vault-name> --query value -o tsv
+
+
+
+az keyvault secret show --name terraform-backend-key --vault-name tfkeyremotestate --query value -o tsv

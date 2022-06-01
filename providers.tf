@@ -10,6 +10,15 @@ terraform {
       version = "~>2.0"
     }
   }
+
+
+   backend "azurerm" {
+    resource_group_name  = "remote-terraform-state"
+    storage_account_name = "tfstoragetrainingenc"
+    container_name       = "remote-terraform-container"
+    key                  = "terraform.tfstate"
+      }
+
 }
 
 provider "azurerm" {
